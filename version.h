@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace luminator
 {
     class version
@@ -14,6 +16,8 @@ namespace luminator
         int subMinor() const { return m_subMinor; }
         int build() const { return m_build; }
 
+        bool fromString(const std::string &version) { throw 0; }
+        
     private:
         bool m_valid = false;
         int m_major = 0;
