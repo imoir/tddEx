@@ -102,6 +102,34 @@ TEST(VersionTest, ConstructorDefault_SetValidCompleteVersionTrailingSpacesOK_Ver
     EXPECT_EQ(version.build(), 925);
 }
 
+TEST(VersionTest, ConstructorDefault_SetValidMinimalVersionTrailingSpacesOK_VersionIsValidAndCorrect)
+{
+    luminator::version version;
+
+    bool result = version.fromString("6223.391455   ");
+
+    EXPECT_TRUE(result);
+    EXPECT_TRUE(version.isValid());
+    EXPECT_EQ(version.major(), 6223);
+    EXPECT_EQ(version.minor(), 391455);
+    EXPECT_EQ(version.subMinor(), 0);
+    EXPECT_EQ(version.build(), 0);
+}
+
+TEST(VersionTest, ConstructorDefault_SetValidNoBuildVersionTrailingSpacesOK_VersionIsValidAndCorrect)
+{
+    luminator::version version;
+
+    bool result = version.fromString("91.82.64   ");
+
+    EXPECT_TRUE(result);
+    EXPECT_TRUE(version.isValid());
+    EXPECT_EQ(version.major(), 91);
+    EXPECT_EQ(version.minor(), 82);
+    EXPECT_EQ(version.subMinor(), 64);
+    EXPECT_EQ(version.build(), 0);
+}
+
 TEST(VersionTest, ConstructorDefault_SetInvalidVersionNoMinor_VersionIsInvalid)
 {
     luminator::version version;
@@ -201,3 +229,34 @@ TEST(VersionTest, ConstructorDefault_SetInvalidVersionBlank_VersionIsInvalid)
     EXPECT_FALSE(result);
     EXPECT_FALSE(version.isValid());
 }
+
+TEST(VersionTest, ConstructorDefault_SetInvalidCompleteVersionTrailingSpacesAndGarbage_VersionIsinvalid)
+{
+    luminator::version version;
+
+    bool result = version.fromString("62.39.74.925 x");
+
+    EXPECT_FALSE(result);
+    EXPECT_FALSE(version.isValid());
+}
+
+TEST(VersionTest, ConstructorDefault_SetinInvalidMinimalVersionTrailingSpacesAndGarbage_VersionIsInvalid)
+{
+    luminator::version version;
+
+    bool result = version.fromString("6223.391455   .");
+
+    EXPECT_FALSE(result);
+    EXPECT_FALSE(version.isValid());
+}
+
+TEST(VersionTest, ConstructorDefault_SetInvalidNoBuildVersionTrailingSpacesAndGarbage_VersionIsInvalid)
+{
+    luminator::version version;
+
+    bool result = version.fromString("91.82.64   y");
+
+    EXPECT_FALSE(result);
+    EXPECT_FALSE(version.isValid());
+}
+

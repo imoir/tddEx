@@ -16,13 +16,15 @@ namespace luminator
         int subMinor() const { return m_subMinor; }
         int build() const { return m_build; }
 
-        bool fromString(const std::string &version) { throw 0; }
-        
+        bool fromString(const std::string &versionStr);
+
     private:
         bool m_valid = false;
         int m_major = 0;
         int m_minor = 0;
         int m_subMinor = 0;
         int m_build = 0;
+
+        unsigned getNumber(const std::string &versionStr, size_t &index);
     };
 }
